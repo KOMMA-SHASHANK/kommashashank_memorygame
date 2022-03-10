@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>Memory Game</title>
+    <link rel="stylesheet" type="text/css" href="file:///C:/Users/komma/Downloads/fontawesome-free-6.0.0-web/fontawesome-free-6.0.0-web/css/all.css">
+
+    <style>
+        html{
+            font-family: 'Nunito';
+            background-image: url("./images.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+        h1,#score{
+            color: white;
+        }
+        i.fa-brands{
+            position: relative;
+            display: inline-block;
+            line-height: 10px;
+            margin: 1px;
+            padding: 10px;
+            height: 20px;
+            width: 20px;
+            cursor: pointer;
+            background-color: aquamarine;
+            text-align: center;
+            font-size: 22px;
+            border-radius: 4px;
+        }
+        i.fa-brands::after{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            content: "";
+            background-color:aquamarine;
+            border-radius: 4px;
+        }
+        .isShown::after,.isMatched::after{
+            content: none !important;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1>MEMORY GAME</h1>
+        <form onsubmit="return startGame()">
+            <select name="" id="level">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+                <option value="expert">Expert</option>
+            </select>
+            <button type="submit">Start The Game</button>
+        </form><br>
+        <div id="gameContainer"></div>
+        <div id="score">Score : 0</div>
+    </center>
+    
+    <script >
+        var brands=["adn","adversal","algolia","alipay","amazon","android",
+    "angular","apple","atlassian","bandcamp","bitcoin","bitbucket","bimobject",
+    "blogger","bluetooth","bootstrap","buffer","canadian-maple-leaf",
+    "cc-visa","chrome","cloudflare","cloudsmith","cpanel","contao","cuttlefish",
+    "delicious","deskpro","dev","digg","discord","edge","ello","facebook",
+    "fedex","fedora","firefox","git","github","google","hips","hotjar","itunes",
+    "opera","orcid","php","quora","paypal","qq","renren","redhat","salesforce","skype","sith","shopify","sitrox",
+    "sketch","slack","snapchat-square","speakap","spotify","steam","strava","stripe",
+    "suse","swift","symfony","telegram","tiktok","trello","tumblr","twitter",
+    "unity","typo3","uikit","untappd","vk","vnv","windows","wix",
+    "xbox","yarn","youtube","yahoo","ebay","gg","gitter","glide","hashnode","hooli","viber",
+    "usb","uber","ubuntu","umbraco","vimeo","ups","vine","waze","yelp",
+    "mixer","microsoft","modx","medrt","napster"];
+const startGame = () =>{
+    const gameContainer=document.getElementById('gameContainer');
+    gameContainer.innerHTML='';
+    var scoreDiv=document.getElementById('score');
+    const level=document.getElementById('level').value;
+    var score=0,difficulty;
+    if(level=="easy") difficulty=4;
+    else if(level=='medium') difficulty=6;
+    else if(level=='hard') difficulty=8;
+    else if(level=='expert') difficulty=10;
+    var brands2=JSON.parse(JSON.stringify(brands));
+    var selectedBrand=[];
+    for(var i=(difficulty*difficulty)/2;i>0;--i)
+    {
+        var randomBrand=brands2.splice(Math.floor(Math.random()*brands2.length),1);
+        selectedBrand.push(randomBrand);
+        selectedBrand.push(randomBrand);
+    }
+    for(var i=difficulty;i>0;--i)
+    {
+        var row=document.createElement('div')
+        for(var j=difficulty;j>0;--j)
+        {
+            var col=document.createElement('i');
+            col.classList.add('fa-brands');
+            col.classList.add('fa-'+selectedBrand.splice(Math.floor(Math.random()*selectedBrand.length),1));
+            col.addEventListener('click',function(event)
+            {
+                var revealed=document.querySelectorAll('.isShown');
+                if(revealed.length==2)
+                {
+                    if(revealed[0].getAttribute('class')==revealed[1].getAttribute('class'))
+                    {
+                        revealed[0].classList.add('isMatched');
+                        revealed[1].classList.add('isMatched');
+                    }
+                    revealed[0].classList.remove('isShown');
+                    revealed[1].classList.remove('isShown');
+                }
+                event.currentTarget.classList.add('isShown');
+                if(revealed.length==1)
+                {
+                    if(revealed[0].getAttribute('class')==event.currentTarget.getAttribute('class'))
+                    ++score;
+                }
+                scoreDiv.innerHTML=`Score ${score}`;
+                if(score==(difficulty*difficulty)/2)
+                {
+                    alert("Congratulations!! You Won");
+                    window.location.reload();
+                }
+            })
+            row.append(col);
+            
+        }
+        gameContainer.append(row);
+    }
+    return false;
+}
+    </script>
+</body>
+</html>
