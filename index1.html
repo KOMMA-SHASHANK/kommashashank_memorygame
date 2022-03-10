@@ -4,7 +4,7 @@
 <head>
     
     <title>Memory Game</title>
-    <link rel="stylesheet" type="text/css" href="all.css">
+    
 
     <style>
         html{
@@ -48,21 +48,7 @@
     </style>
 </head>
 <body>
-    <center>
-        <h1>MEMORY GAME</h1>
-        <form onsubmit="return startGame()">
-            <select name="" id="level">
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-                <option value="expert">Expert</option>
-            </select>
-            <button type="submit">Start The Game</button>
-        </form><br>
-        <div id="gameContainer"></div>
-        <div id="score">Score : 0</div>
-    </center>
-    
+    <script src="https://kit.fontawesome.com/68a7608eaa.js" crossorigin="anonymous"></script>
     <script >
         var brands=["adn","adversal","algolia","alipay","amazon","android",
     "angular","apple","atlassian","bandcamp","bitcoin","bitbucket","bimobject",
@@ -137,5 +123,20 @@ const startGame = () =>{
     return false;
 }
     </script>
+    <center>
+        <h1>MEMORY GAME</h1>
+        <form onsubmit="return startGame()">
+            <select name="" id="level">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+                <option value="expert">Expert</option>
+            </select>
+            <button type="submit">Start The Game</button>
+        </form><br>
+        <div id="gameContainer"></div>
+        <div id="score">Score : 0</div>
+    </center>
+    
 </body>
 </html>
